@@ -28,17 +28,20 @@ Total breakpoint duration : 4696ms
 # Usage
 
 ```cpp
-using DetectedBreakpointCallback = std::function<void(const std::chrono::milliseconds& breakpointDuration)>;
+namespace breakpoint_detector_example
+{
+	// example of detected breakpoint callback that displays the duration of the detected breakpoint
+	static void displayDetectedBreakpoint(const std::chrono::milliseconds& breakpointDuration);
+} // namespace breakpoint_detector_example
 
 class BreakpointDetector
 {
 public:
 	// true for bRun in order to start the breakpoint detection at construction
-	BreakpointDetector(bool bRun = true);
+	BreakpointDetector(bool bRun);
 
 	// can be called at any time, ideally in the main function
 	void addDetectedBreakpointCallback(DetectedBreakpointCallback detectedBreakpointCallback);
-
 	// should be called one time, ideally in the main function
 	template <class _Rep, class _Period> void run(const std::chrono::duration<_Rep, _Period>& breakpointDetectionDuration);
 
@@ -51,9 +54,9 @@ public:
 	void run(const std::chrono::nanoseconds& breakpointDetectionDuration = std::chrono::nanoseconds(100'000'000), // 100ms
 		const std::chrono::nanoseconds& checkDuration = std::chrono::nanoseconds(16'000'000));					  // 16ms
 
+	// sum of all breakpoint detected
 	std::chrono::milliseconds getBreakpointTotalDuration() const;
 };
-
 ```
 
 # Licence
