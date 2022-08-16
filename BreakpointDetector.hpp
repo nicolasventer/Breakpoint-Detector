@@ -4,6 +4,7 @@
 
 #include <chrono>
 #include <functional>
+#include <iostream>
 #include <thread>
 #include <vector>
 
@@ -23,15 +24,20 @@ public:
 
 	// can be called at any time, ideally in the main function
 	void addDetectedBreakpointCallback(DetectedBreakpointCallback detectedBreakpointCallback);
-	// should be called one time, ideally in the main function
+
 	template <class _Rep, class _Period> void run(const std::chrono::duration<_Rep, _Period>& breakpointDetectionDuration);
 
-	// should be called one time, ideally in the main function
+	/**
+	 * @brief start to check if a breakpoint has been detected
+	 * should be called once, ideally in the main function
+	 *
+	 * @param breakpointDetectionDuration minimum duration from which a breakpoint is detected
+	 * @param checkDuration duration used for periodic check of a breakpoint
+	 */
 	template <class _Rep1, class _Period1, class _Rep2, class _Period2>
 	void run(const std::chrono::duration<_Rep1, _Period1>& breakpointDetectionDuration,
 		const std::chrono::duration<_Rep2, _Period2>& checkDuration);
 
-	// should be called one time, ideally in the main function
 	void run(const std::chrono::nanoseconds& breakpointDetectionDuration = std::chrono::nanoseconds(100'000'000), // 100ms
 		const std::chrono::nanoseconds& checkDuration = std::chrono::nanoseconds(16'000'000));					  // 16ms
 
