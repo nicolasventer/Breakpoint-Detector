@@ -30,44 +30,31 @@ Total breakpoint duration : 4696ms
 # Usage
 
 ```cpp
-namespace breakpoint_detector_example
+
+using DetectedBreakpointCallback = std::function<void(const std::chrono::milliseconds& breakpointDuration)>;
+
+namespace breakpoint_detector
 {
-	// example of detected breakpoint callback that displays the duration of the detected breakpoint
-	static void displayDetectedBreakpoint(const std::chrono::milliseconds& breakpointDuration);
-} // namespace breakpoint_detector_example
+	// add a function to call on breakpoint detection
+	static void addDetectedBreakpointCallback(DetectedBreakpointCallback detectedBreakpointCallback);
 
-class BreakpointDetector
-{
-public:
-	// true for bRun in order to start the breakpoint detection at construction
-	BreakpointDetector(bool bRun);
+	// sum of all detected breakpoint duration
+	static std::chrono::milliseconds getBreakpointTotalDuration();
 
-	// can be called at any time, ideally in the main function
-	void addDetectedBreakpointCallback(DetectedBreakpointCallback detectedBreakpointCallback);
-	
-	template <class _Rep, class _Period> void run(const std::chrono::duration<_Rep, _Period>& breakpointDetectionDuration);
+	// set the minimum duration from which a breakpoint is detected
+	template <class _Rep, class _Period>
+	void setBreakpointDetectionDuration(const std::chrono::duration<_Rep, _Period>& breakpointDetectionDuration_);
 
-	/**
-	 * @brief start to check if a breakpoint has been detected
-	 * should be called once, ideally in the main function
-	 * 
-	 * @param breakpointDetectionDuration minimum duration from which a breakpoint is detected
-	 * @param checkDuration duration used for periodic check of a breakpoint
-	 */
-	template <class _Rep1, class _Period1, class _Rep2, class _Period2>
-	void run(const std::chrono::duration<_Rep1, _Period1>& breakpointDetectionDuration,
-		const std::chrono::duration<_Rep2, _Period2>& checkDuration);
+	// set the duration used for periodic check of a breakpoint
+	template <class _Rep, class _Period> void setCheckpointDuration(const std::chrono::duration<_Rep, _Period>& checkDuration_);
 
-	void run(const std::chrono::nanoseconds& breakpointDetectionDuration = std::chrono::nanoseconds(100'000'000), // 100ms
-		const std::chrono::nanoseconds& checkDuration = std::chrono::nanoseconds(16'000'000));					  // 16ms
+	namespace example
+	{
+		// example of detected breakpoint callback that displays the duration of the detected breakpoint
+		static void displayDetectedBreakpoint(const std::chrono::milliseconds& breakpointDuration);
 
-	// sum of all breakpoint detected
-	std::chrono::milliseconds getBreakpointTotalDuration() const;
-
-private:
-	std::vector<DetectedBreakpointCallback> detectedBreakpointCallbackList;
-	std::chrono::milliseconds breakpointTotalDurationMs;
-};
+	} // namespace example
+} // namespace breakpoint_detector
 ```
 
 **Warning: the breakpoint will not be immediately detected.**
