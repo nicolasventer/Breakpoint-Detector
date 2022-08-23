@@ -4,6 +4,13 @@
 
 Breakpoint Detector is a **single header c++ library** that allows you to **detect when the execution has been paused by a breakpoint** with the ability to **retrieve the elapsed time while the execution was paused**.
 
+# Features
+
+- Detect breakpoint
+- Brekapoint detection configurable
+- Callback on detection
+- Multiple callback supported
+
 # Installation
 
 Include the file [`BreakpointDetector.hpp`](BreakpointDetector.hpp) in your project.
@@ -76,7 +83,7 @@ namespace breakpoint_detector
 	void setBreakpointDetectionDuration(const std::chrono::duration<_Rep, _Period>& breakpointDetectionDuration_);
 
 	// set the duration used for periodic check of a breakpoint
-	template <class _Rep, class _Period> void setCheckpointDuration(const std::chrono::duration<_Rep, _Period>& checkDuration_);
+	template <class _Rep, class _Period> void setCheckDuration(const std::chrono::duration<_Rep, _Period>& checkDuration_);
 
 	namespace example
 	{

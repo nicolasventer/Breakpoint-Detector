@@ -23,7 +23,7 @@ namespace breakpoint_detector
 	void setBreakpointDetectionDuration(const std::chrono::duration<_Rep, _Period>& breakpointDetectionDuration_);
 
 	// set the duration used for periodic check of a breakpoint
-	template <class _Rep, class _Period> void setCheckpointDuration(const std::chrono::duration<_Rep, _Period>& checkDuration_);
+	template <class _Rep, class _Period> void setCheckDuration(const std::chrono::duration<_Rep, _Period>& checkDuration_);
 
 	namespace example
 	{
@@ -50,7 +50,7 @@ public:
 	void setBreakpointDetectionDuration(const std::chrono::duration<_Rep, _Period>& breakpointDetectionDuration_);
 
 	// set the duration used for periodic check of a breakpoint
-	template <class _Rep, class _Period> void setCheckpointDuration(const std::chrono::duration<_Rep, _Period>& checkDuration_);
+	template <class _Rep, class _Period> void setCheckDuration(const std::chrono::duration<_Rep, _Period>& checkDuration_);
 
 private:
 	void run();
@@ -106,7 +106,7 @@ void BreakpointDetector::setBreakpointDetectionDuration(const std::chrono::durat
 }
 
 template <class _Rep, class _Period>
-void BreakpointDetector::setCheckpointDuration(const std::chrono::duration<_Rep, _Period>& checkDuration_)
+void BreakpointDetector::setCheckDuration(const std::chrono::duration<_Rep, _Period>& checkDuration_)
 {
 	checkDuration = checkDuration;
 }
@@ -131,9 +131,9 @@ namespace breakpoint_detector
 		_private::instance.setBreakpointDetectionDuration(breakpointDetectionDuration_);
 	}
 
-	template <class _Rep, class _Period> void setCheckpointDuration(const std::chrono::duration<_Rep, _Period>& checkDuration_)
+	template <class _Rep, class _Period> void setCheckDuration(const std::chrono::duration<_Rep, _Period>& checkDuration_)
 	{
-		_private::instance.setCheckpointDuration(checkDuration_);
+		_private::instance.setCheckDuration(checkDuration_);
 	}
 
 	namespace example
