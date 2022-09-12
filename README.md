@@ -68,7 +68,10 @@ Total breakpoint duration : 4696ms
 
 ```cpp
 
-using DetectedBreakpointCallback = std::function<void(const std::chrono::milliseconds& breakpointDuration)>;
+#define DECTECTED_BREAKPOINT_PARAM const std::chrono::milliseconds& breakpointDuration
+// parameters are captures
+#define DECTECTED_BREAKPOINT_LAMBDA(...) [__VA_ARGS__](DECTECTED_BREAKPOINT_PARAM)
+using DetectedBreakpointCallback = std::function<void(DECTECTED_BREAKPOINT_PARAM)>;
 
 namespace breakpoint_detector
 {
@@ -88,7 +91,7 @@ namespace breakpoint_detector
 	namespace example
 	{
 		// example of detected breakpoint callback that displays the duration of the detected breakpoint
-		static void displayDetectedBreakpoint(const std::chrono::milliseconds& breakpointDuration);
+		static void displayDetectedBreakpoint(DECTECTED_BREAKPOINT_PARAM);
 
 	} // namespace example
 } // namespace breakpoint_detector
